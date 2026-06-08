@@ -17,7 +17,7 @@ A dead simple, yet usable music player: now with a few features that actually ma
 - [x] Add Vim key support
 
 
-# compiling (void) 
+# compiling (Arch) 
 
 Dependencies: `doas pacman -S alsa-lib ffmpeg ncurses clang make`
 
