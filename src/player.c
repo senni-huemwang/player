@@ -23,7 +23,7 @@
 char dir[P], **files = NULL, buf[P*2], playing[P], err[P];
 int n = 0, max_files = 0, sel = 0, st = 0;
 volatile int stop, alive, paused;
-volatile int loop_track = 0;
+volatile int loop_track = 0; 
 volatile double seek_offset = 0; 
 volatile int seek_req = 0;        
 volatile int seek_busy = 0; 
@@ -98,7 +98,6 @@ void draw() {
 
     if (alive && playing[0]) { 
         const char *filename = strrchr(playing, '/');
-        // Visual indicator displaying loop status string directly on screen layout
         snprintf(buf, sizeof(buf), "%s %s %s", 
                  paused ? "[PAUSED]" : ">", 
                  filename ? filename + 1 : playing,
@@ -108,7 +107,7 @@ void draw() {
     if (err[0]) { attron(A_BOLD); c(LINES - 4, err); attroff(A_BOLD); }
 
     c(LINES - 3, "q - exit | r - toggle loop | space - pause/play");
-    c(LINES - 2, "left/right - rewind/forward 10s");
+    c(LINES - 2, "h/l - rewind/forward 10s | j/k - down/up");
     c(LINES - 1, "enter - play selected");
     refresh();
 }
@@ -341,19 +340,16 @@ int main() {
         int ch = getch();
         
         if (ch == 'q' || ch == 'Q') { stop_play(); break; }
+        if (ch == 'r' || ch == 'R') { loop_track = !loop_track; }
         
-        if (ch == 'r' || ch == 'R') { 
-            loop_track = !loop_track; 
-        }
-        
-        if (ch == KEY_UP && sel > 0) sel--;
-        if (ch == KEY_DOWN && sel < n - 1) sel++;
+        if ((ch == 'k' || ch == 'K') && sel > 0) sel--;
+        if ((ch == 'j' || ch == 'J') && sel < n - 1) sel++;
         
         if (ch == ' ') { 
             if (alive) paused = !paused; 
         }
         
-        if (ch == KEY_RIGHT) { 
+        if (ch == 'l' || ch == 'L') { 
             if (alive && !seek_busy) { 
                 long long now = get_ms();
                 if (now - last_seek_time > debounce_threshold) {
@@ -364,7 +360,7 @@ int main() {
                 }
             } 
         }
-        if (ch == KEY_LEFT) { 
+        if (ch == 'h' || ch == 'H') { 
             if (alive && !seek_busy) { 
                 long long now = get_ms();
                 if (now - last_seek_time > debounce_threshold) {
