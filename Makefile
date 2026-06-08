@@ -1,6 +1,6 @@
-CFILES=m701.c
+CFILES=src/player.c
 OFILES=${CFILES:.c=.o}
-TARG=m701
+TARG=player
 CFLAGS=-std=c99
 LIBS=-pthread -lncurses -lasound -lavformat -lavcodec -lavutil -lswresample -lm
 LDFLAGS= ${LIBS}
@@ -25,3 +25,4 @@ install: all
 
 uninstall:
 	rm -f ${BINDIR}/${TARG}
+
