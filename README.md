@@ -17,14 +17,21 @@ A dead simple, yet usable music player: now with a few features that actually ma
 - [x] Add Vim key support
 
 
-# compiling (Arch) 
+# Installation
 
-Dependencies: `doas pacman -S alsa-lib ffmpeg ncurses clang make`
+## Dependencies
 
-Building: `make`
+### Arch Linux
+`doas pacman -S alsa-lib ffmpeg ncurses clang make`
 
-Install: `sudo/doas make install`
+### Ubuntu Linux
+`sudo apt install libncurses-dev libasound2-dev libavformat-dev libavcodec-dev libavutil-dev libswresample-dev ffmpeg make`
 
+## Building
+`make`
+
+## Install
+`sudo/doas make install`
 
 # License 
 
